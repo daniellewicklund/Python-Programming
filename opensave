@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Apr 15 12:11:44 2021
+
+@author: DANI
+"""
+
+from csv import reader
+
+#Opens and reads records of the CSV file
+def read(): 
+    names = {}
+    with open("schools.csv", "r") as csvFile:
+        csvreader = reader(csvFile)
+        csvreader.__next__()
+        for line in csvreader:
+            names[line[0].strip()] = {'age': int(line[1]), 'grade': line[2].strip(), 'school': line[3].strip()}
+
+    return names 
+
+names = read()
+print('Reading records before updating!') 
+print(names)
+
+#Opens and adds records to the CSV file
+def add(names):
+    new_name = {"age" : "23", "grade": "A", "school":"Trinity"} 
+    names["Danielle"] = new_name
+    new_name = {"age" : "78", "grade": "B", "school":"Drake"} 
+    names["William"] = new_name
+   
+    return names 
+
+names = add(names)
+print('Reading records after updating!') 
+print(names)
+
+#Opens and saves records to the CSV file
+def save(names):
+    with open("../schools.csv", "w+") as csvFile:
+        csvFile.write("Name, Age, Grade, School\n")
+        for name in names:
+            csvFile.write(f"{name}, {names[name]['age']}, {names[name]['grade']}, {names[name]['school']}\n")
+
+save(names)
+

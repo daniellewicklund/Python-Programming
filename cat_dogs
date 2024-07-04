@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Apr  8 12:45:38 2021
+
+@author: DANI
+"""
+
+import random
+
+#This method compares numbers and tracks matches
+def compare_numbers(number, user_guess):
+    catsdogs = [0,0]
+    for i in range(len(number)):
+        if number[i] == user_guess[i]:
+            catsdogs[1]+=1
+        else:
+            catsdogs[0]+=1
+    return catsdogs
+
+#This method generates a random 4-digit number
+def random_guess():
+    number = str(random.randint(1000, 9999))
+    return number #Random 4 digit number
+
+#Explanation of the game
+def game_explanation():
+    print("Let's play a game of CatsDogs!") 
+    print("I will generate a number, and you have to guess the numbers one digit at a time.")
+    print("For every number in the wrong place, you get a cat. For every one in the right place, you get a dog.") 
+    print("The game ends when you get 4 dogs!")
+    print("Type exit at any prompt to exit.")
+
+
+if __name__=="__main__":
+    playing = True #Flag to play the game
+    number = random_guess()
+    guesses = 0 #Initalize guesses
+    game_explanation()
+    while playing:
+        #This section captures a user guess
+        user_guess = input("\nEnter four numbers:\n\n")
+        if user_guess == "exit": #Ensure the program exits
+            break
+        # This section is called to track number of matches
+        catsdogs_count=compare_numbers(number, user_guess)
+        guesses+=1
+        #This section tells the user how many cats and dogs they have
+        print("You have" + str(catsdogs_count[0]) + "cats, and" + str(catsdogs_count[1]) + "dogs.")
+        #This section tells the user that they win after x number of guesses and gives them the actual number that they were initially supposed to guess
+        if catsdogs_count[1]==4: 
+            playing = False
+            print("You won the game after:" + str(guesses) + "!. The number was:" + str(number))
+            break
+        #This section tells the user that they win after x number of guesses and gives them the actual number that they were initially supposed to guess
+        else:
+            print("You got it wrong. Try again!")
+  
